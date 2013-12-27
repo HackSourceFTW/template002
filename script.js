@@ -1,4 +1,3 @@
-
 // requestAnim shim layer by Paul Irish
     window.requestAnimFrame = (function(){
       return  window.requestAnimationFrame       || 
@@ -10,59 +9,62 @@
                 window.setTimeout(callback, 1000 / 60);
               };
     })();
+    var x		=	1;
+    var y		=	12;
+    var dirx	=	1;
+    var diry	=	1;
 
-var paper	=	Raphael('holder',610, 480);  
-var x		=	1;
-var y		=	12;
-var dirx	=	1;
-var diry	=	1;
-var circle = paper.circle(10, 10, 10);  
-	circle.attr("fill", "#ffff00");
-	circle.attr("stroke", "#ffff00");
-
- //window.onload=function() {
-	alert('Welcome!');
-//function init() {
+    var imageObj = new Image();	
+	imageObj.src = "bigball.png";
     canvas = document.createElement( 'canvas' );
     canvas.width = 568;
     canvas.height = 400;
     context = canvas.getContext( '2d' );
-    context.font = "40pt Calibri";
-    context.fillStyle = "black";
-	// align text horizontally center
-	context.textAlign = "center";
-	// align text vertically center
-	context.textBaseline = "middle";	
-	context.font = "12pt Calibri"; 
-	canvas.width = 6186;
-	context.drawImage(background_obj, backg_x, backg_y);
- 	imageData = context.getImageData(0,0,6186,300);
- 	//var x = document;
-    canvas.width = 568;
-    $( "#container" ).append( canvas );
-//}
-animate();
-function animate() {
-    requestAnimFrame( animate );
-   
-    draw();
-}
-
-function draw(){
+  	$( document ).ready(function() {  
+  	alert('ready');
 	
-	// Raphael.animation(params, ms)
-	// circle.animate({arc: [x, 300, 10]}, 750, "elastic");
-	circle.animate({"cx":x,"cy":y},5,"linear");
-
-	x = x + dirx;
-	y = y + diry;
-
-	if ( y == 480 || y== 0){
-	diry = -diry;
-	}
-	if ( x == 620|| x == 0){
-	dirx = -dirx;
-	}
+        $( "#holder" ).append( canvas );
+        animate();
+    });
+   
+    function animate() {
+        requestAnimFrame( animate );
+        update();
+        draw();
 }
 
+    function update(){
+        x = x + dirx;
+        y = y + diry;
 
+        if ( y == 360 || y== 0){
+            diry = -diry;
+        }
+        if ( x == 480|| x == 0){
+            dirx = -dirx;
+        }
+    }
+
+    function draw() 
+    {
+	
+	    context.clearRect(0,0 , canvas.width, canvas.height);
+ 
+	    context.save();
+        
+        context.beginPath();
+     	
+        // draw hero
+
+	    console.log(y);
+	    
+	    context.drawImage(imageObj, x, y );
+ 		
+ 		context.restore();
+
+	    str2 = "x: " + x + "y :" + y;
+	    context.fillText(str2, 20, 34);
+
+	    context.fillStyle = 'white';
+			
+	}// end draw
